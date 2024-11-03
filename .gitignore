@@ -2,7 +2,7 @@
 .env
 
 # Carpeta de módulos de Node.js
-/node_modules/
+/src/backend/node_modules/
 
 # Archivos de registro
 *.log
