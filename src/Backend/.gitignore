@@ -1,0 +1,19 @@
+# Archivos de entorno
+.env
+
+# Carpeta de módulos de Node.js
+
+# Archivos de registro
+*.log
+
+# Archivos de compilación
+/dist
+/build
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Archivos temporales
+*.tmp
+*.temp

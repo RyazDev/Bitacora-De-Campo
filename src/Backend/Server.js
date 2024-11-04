@@ -1,40 +1,39 @@
-// server.js
-
-// Cargar las variables de entorno
-require('dotenv').config();
-
-// Importar dependencias
 const express = require('express');
 const mongoose = require('mongoose');
-const config = require('./config/config'); // Importa la configuración
-const cors = require('cors'); // Para habilitar CORS
+const dotenv = require('dotenv');
+const userRoutes = require('./Routes/userRoutes');
+const errorHandler = require('./Middleware/errorMiddleware');
 
-// Importar las rutas
-const userRoutes = require('./routes/userRoutes');
-const logRoutes = require('./routes/logRoutes');
+dotenv.config(); // Cargar las variables de entorno
 
 const app = express();
+const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors()); // Habilitar CORS
-app.use(express.json()); // Para analizar el cuerpo de las solicitudes en formato JSON
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Conectar a la base de datos
-mongoose.connect(config.MONGODB_URI)
-  .then(() => console.log('Conectado a MongoDB'))
-  .catch(err => console.error('Error al conectar a MongoDB:', err));
+mongoose.connect(process.env.DB_URI)
+    .then(() => console.log('Conectado a la base de datos'))
+    .catch(err => console.error('Error de conexión a la base de datos:', err));
 
 // Rutas
-app.use('/api/usuarios', userRoutes); // Rutas de usuarios
-app.use('/api/logs', logRoutes); // Rutas de bitácoras
+app.use('/api/users', userRoutes);
 
-// Ruta de prueba
-app.get('/', (req, res) => {
-  res.send('¡Bienvenido a la API de Bitácora de Aves!');
+// Manejo de errores
+app.use((err, req, res, next) => {
+    console.error(err);
+    res.status(500).json({ message: 'Error interno del servidor', error: err.message });
+});
+
+// Manejo de 404
+app.use((req, res) => {
+    res.status(404).json({ message: 'Ruta no encontrada' });
 });
 
 // Iniciar el servidor
-const PORT = config.PORT;
 app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}`);
+    console.log(`Servidor escuchando en http://localhost:${PORT}`);
 });
+

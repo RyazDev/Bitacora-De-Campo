@@ -1,18 +1,16 @@
-// routes/userRoutes.js
+// Routes/userRoutes.js
 const express = require('express');
 const router = express.Router();
-const User = require('../Models/User'); // Asegúrate de que la ruta sea correcta
+const userController = require('../Controllers/userController');
+const authMiddleware = require('../Middleware/authMiddleware');
+const validationMiddleware = require('../Middleware/validationMiddleware');
 
-// Crear nuevo usuario
-router.post('/', async (req, res) => {
-  const { nombre, email, contraseña } = req.body;
-  const nuevoUsuario = new User({ nombre, email, contraseña });
-  try {
-    await nuevoUsuario.save();
-    res.status(201).json(nuevoUsuario);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
+// Rutas para la gestión de usuarios
+router.post('/register', validationMiddleware.validateRegisterUser, userController.registerUser);
+router.post('/login', userController.loginUser);
+router.get('/', authMiddleware.verifyAdmin, userController.getAllUsers);
+router.put('/:id', authMiddleware.verifyAdmin, userController.updateUser);
+router.delete('/:id', authMiddleware.verifyAdmin, userController.deleteUser);
 
 module.exports = router;
+
