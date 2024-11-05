@@ -12,7 +12,7 @@ exports.verifyToken = (req, res, next) => {
             return res.status(401).json({ message: 'Token no válido.' });
         }
         req.userId = decoded.id;
-        req.role = decoded.role;
+        req.role = decoded.role; // Asegúrate de que el rol esté incluido en el token
         next();
     });
 };
@@ -25,3 +25,4 @@ exports.verifyAdmin = (req, res, next) => {
         next();
     });
 };
+

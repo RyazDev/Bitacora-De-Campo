@@ -7,7 +7,7 @@ const validationMiddleware = require('../Middleware/validationMiddleware');
 
 // Rutas para la gestión de usuarios
 router.post('/register', validationMiddleware.validateRegisterUser, userController.registerUser);
-router.post('/login', userController.loginUser);
+router.post('/login', validationMiddleware.validateLoginUser, userController.loginUser);
 router.get('/', authMiddleware.verifyAdmin, userController.getAllUsers);
 router.put('/:id', authMiddleware.verifyAdmin, userController.updateUser);
 router.delete('/:id', authMiddleware.verifyAdmin, userController.deleteUser);

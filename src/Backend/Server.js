@@ -18,6 +18,11 @@ mongoose.connect(process.env.DB_URI)
     .then(() => console.log('Conectado a la base de datos'))
     .catch(err => console.error('Error de conexión a la base de datos:', err));
 
+// Ruta raíz
+app.get('/', (req, res) => {
+    res.send('¡Bienvenido a la página principal de la API!');
+});
+
 // Rutas
 app.use('/api/users', userRoutes);
 
@@ -36,4 +41,3 @@ app.use((req, res) => {
 app.listen(PORT, () => {
     console.log(`Servidor escuchando en http://localhost:${PORT}`);
 });
-
