@@ -1,7 +1,6 @@
 // Middleware/validationMiddleware.js
 const { body, validationResult } = require('express-validator');
 
-// Validaciones de registro de usuario
 const validateUserRegistration = () => {
     return [
         body('username')
@@ -27,7 +26,6 @@ const validateUserRegistration = () => {
     ];
 };
 
-// Validaciones de inicio de sesión de usuario
 const validateUserLogin = () => {
     return [
         body('email')
@@ -39,15 +37,14 @@ const validateUserLogin = () => {
     ];
 };
 
-// Middleware para manejar errores de validación
 const handleValidationErrors = (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+        const errorMessages = errors.array().map(error => error.msg);
+        return res.status(400).json({ errors: errorMessages });
     }
     next();
 };
 
-// Exportar las funciones de validación
 exports.validateRegisterUser = [...validateUserRegistration(), handleValidationErrors];
 exports.validateLoginUser = [...validateUserLogin(), handleValidationErrors];
