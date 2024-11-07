@@ -1,7 +1,6 @@
 const Log = require('../Models/LogModel');
 const { validationResult } = require('express-validator');
 
-// Crear bitácora
 const createLog = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -10,17 +9,14 @@ const createLog = async (req, res) => {
 
     const { title, samplingDate, location, weatherConditions, habitatDescription, speciesCollected, additionalNotes, photos } = req.body;
 
-    // Validación de las coordenadas
     if (!location || !location.coordinates || !Array.isArray(location.coordinates) || location.coordinates.length !== 2) {
         return res.status(400).json({ message: 'Coordenadas inválidas. Deben ser un array de dos números (longitud, latitud).' });
     }
 
-    // Validación de fecha de muestreo
     if (isNaN(new Date(samplingDate))) {
         return res.status(400).json({ message: 'Fecha de muestreo inválida.' });
     }
 
-    // Creación de la bitácora
     const log = new Log({
         title,
         samplingDate,
@@ -42,7 +38,6 @@ const createLog = async (req, res) => {
     }
 };
 
-// Obtener bitácoras públicas
 const getLogs = async (req, res) => {
     try {
         const logs = await Log.find({ isPublic: true });
@@ -53,7 +48,7 @@ const getLogs = async (req, res) => {
 };
 
 // Obtener bitácora por ID
-const getLogById = async (req, res) => {
+/*const getLogById = async (req, res) => {
     const { id } = req.params;
 
     try {
@@ -65,9 +60,68 @@ const getLogById = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: 'Error al obtener la bitácora', error: error.message });
     }
+};*/
+
+const searchLogs = async (req, res) => {
+    const { title, samplingDate, latitude, longitude, species } = req.query;
+
+    try {
+        const filters = {};
+
+        if (title) {
+            if (typeof title !== 'string' || title.trim().length === 0) {
+                return res.status(400).json({ message: 'El título debe ser una cadena no vacía.' });
+            }
+            filters.title = { $regex: title, $options: 'i' }; // Búsqueda insensible a mayúsculas y minúsculas
+        }
+
+        if (samplingDate) {
+            const date = new Date(samplingDate);
+            if (isNaN(date)) {
+                return res.status(400).json({ message: 'Fecha inválida. Use el formato YYYY-MM-DD.' });
+            }
+            filters.samplingDate = date;
+        }
+
+        if (latitude && longitude) {
+            const lat = parseFloat(latitude);
+            const lon = parseFloat(longitude);
+            if (isNaN(lat) || isNaN(lon)) {
+                return res.status(400).json({ message: 'Las coordenadas de latitud y longitud deben ser números válidos.' });
+            }
+            filters.location = {
+                $geoWithin: {
+                    $centerSphere: [
+                        [lon, lat], // Recuerda que el orden es [longitud, latitud]
+                        5 / 3963.2 // Radio de 5 km
+                    ]
+                }
+            };
+        }
+
+        if (species) {
+            if (typeof species !== 'string' || species.trim().length === 0) {
+                return res.status(400).json({ message: 'La especie debe ser una cadena no vacía.' });
+            }
+            filters.speciesCollected = { $elemMatch: { commonName: { $regex: species, $options: 'i' } } };
+        }
+
+        if (Object.keys(filters).length === 0) {
+            return res.status(400).json({ message: 'Debe proporcionar al menos un parámetro de búsqueda.' });
+        }
+
+        const logs = await Log.find(filters);
+
+        if (logs.length === 0) {
+            return res.status(404).json({ message: 'No se encontraron bitácoras que coincidan con los parámetros de búsqueda.' });
+        }
+        res.status(200).json(logs);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error al obtener las bitácoras', error: error.message });
+    }
 };
 
-// Actualizar bitácora (solo el creador o administradores)
 const updateLog = async (req, res) => {
     const { id } = req.params;
 
@@ -77,12 +131,10 @@ const updateLog = async (req, res) => {
             return res.status(404).json({ message: 'Bitácora no encontrada' });
         }
 
-        // Permiso para actualizar
         if (log.userId.toString() !== req.userId && req.role !== 'administrador') {
             return res.status(403).json({ message: 'No tienes permiso para editar esta bitácora' });
         }
 
-        // Actualización de campos
         const updates = {
             title: req.body.title || log.title,
             samplingDate: req.body.samplingDate || log.samplingDate,
@@ -103,7 +155,6 @@ const updateLog = async (req, res) => {
     }
 };
 
-// Eliminar bitácora (solo el creador o administradores)
 const deleteLog = async (req, res) => {
     const { id } = req.params;
 
@@ -113,7 +164,6 @@ const deleteLog = async (req, res) => {
             return res.status(404).json({ message: 'Bitácora no encontrada' });
         }
 
-        // Permiso para eliminar
         if (log.userId.toString() !== req.userId && req.role !== 'administrador') {
             return res.status(403).json({ message: 'No tienes permiso para eliminar esta bitácora' });
         }
@@ -128,7 +178,7 @@ const deleteLog = async (req, res) => {
 module.exports = {
     createLog,
     getLogs,
-    getLogById,
+    searchLogs,
     updateLog,
     deleteLog
 };

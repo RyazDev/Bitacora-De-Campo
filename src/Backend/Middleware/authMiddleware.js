@@ -18,9 +18,7 @@ exports.verifyToken = (req, res, next) => {
     });
 };
 
-// Verificar si el usuario es administrador
 exports.verifyAdmin = (req, res, next) => {
-    // Llamar a verifyToken directamente sin 'this'
     exports.verifyToken(req, res, () => {
         if (req.role !== 'administrador') {
             return res.status(403).json({ message: 'Acceso denegado. Solo para administradores.' });
