@@ -59,6 +59,22 @@ exports.loginUser = async (req, res) => {
     }
 };
 
+// En userController.js
+exports.getAuthenticatedUser = async (req, res) => {
+    try {
+        const userId = req.user.id; // `req.user` viene del middleware de autenticación
+        const user = await User.findById(userId).select('-password'); // Excluye la contraseña
+
+        if (!user) {
+            return res.status(404).json({ message: 'Usuario no encontrado' });
+        }
+
+        res.status(200).json(user);
+    } catch (error) {
+        console.error('Error al obtener la información del usuario:', error);
+        res.status(500).json({ message: 'Error en el servidor' });
+    }
+};
 
 
 exports.getAllUsers = async (req, res) => {

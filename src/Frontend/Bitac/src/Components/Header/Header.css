@@ -1,0 +1,107 @@
+/* header.css */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #333;
+    color: white;
+}
+
+.logo a {
+    font-size: 24px;
+    color: white;
+    text-decoration: none;
+}
+
+nav ul {
+    list-style-type: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+nav ul li button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+nav ul li button:hover {
+    background-color: #e53935;
+}
+
+/* Estilo para el círculo del perfil */
+.profile-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #fff;
+    color: #333;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.profile-initial {
+    display: inline-block;
+    color: #333;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background-color: white;
+    color: black;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    border-radius: 4px;
+    z-index: 10;
+}
+
+.dropdown-menu a {
+    display: block;
+    margin: 10px 0;
+    text-decoration: none;
+    color: black;
+}
+
+.dropdown-menu a:hover {
+    color: #f44336;
+}
+
+.dropdown-menu button {
+    margin-top: 10px;
+    width: 100%;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.dropdown-menu button:hover {
+    background-color: #e53935;
+}
