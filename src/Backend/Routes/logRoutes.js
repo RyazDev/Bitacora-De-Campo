@@ -1,36 +1,24 @@
 // routes/logRoutes.js
-
 const express = require('express');
 const router = express.Router();
-const Log = require('../models/Log'); // Asegúrate de que tienes el modelo Log
+const logController = require('../Controllers/logController');
+const authMiddleware = require('../Middleware/authMiddleware');
+const rolesMiddleware = require('../Middleware/rolesMiddleware');
 
-// Obtener todas las bitácoras
-router.get('/', async (req, res) => {
-    try {
-        const logs = await Log.find(); // Encuentra todas las bitácoras
-        res.json(logs); // Devuelve las bitácoras como JSON
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
-});
+// Crear bitácora (solo administrador e investigador pueden crear)
+router.post('/', authMiddleware.verifyToken, rolesMiddleware(['administrador', 'investigador']), logController.createLog);
 
-// Crear una nueva bitácora
-router.post('/', async (req, res) => {
-    const log = new Log({
-        // Aquí define los campos que tendrá tu modelo Log
-        title: req.body.title,
-        description: req.body.description,
-        date: req.body.date,
-        // Agrega otros campos según tu modelo
-    });
+// Listar bitácoras (solo listado sin restricción de rol)
+router.get('/', logController.getLogs);
 
-    try {
-        const newLog = await log.save(); // Guarda la nueva bitácora
-        res.status(201).json(newLog); // Devuelve la bitácora creada
-    } catch (err) {
-        res.status(400).json({ message: err.message });
-    }
-});
+// Obtener bitácora por ID (sin restricción de rol)
+router.get('/:id', logController.getLogById);
 
-// Exportar las rutas
+// Actualizar bitácora (solo administrador e investigador pueden actualizar)
+router.put('/:id', authMiddleware.verifyToken, rolesMiddleware(['administrador', 'investigador']), logController.updateLog);
+
+// Eliminar bitácora (solo administrador e investigador pueden eliminar)
+router.delete('/:id', authMiddleware.verifyToken, rolesMiddleware(['administrador', 'investigador']), logController.deleteLog);
+
 module.exports = router;
+

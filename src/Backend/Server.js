@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const userRoutes = require('./Routes/userRoutes');
+const logRoutes = require('./Routes/logRoutes'); // Importar las rutas de log
 const errorHandler = require('./Middleware/errorMiddleware');
 
 dotenv.config(); // Cargar las variables de entorno
@@ -24,7 +25,8 @@ app.get('/', (req, res) => {
 });
 
 // Rutas
-app.use('/api/users', userRoutes);
+app.use('/api/users', userRoutes);  // Rutas de usuarios
+app.use('/api/logs', logRoutes);    // Rutas para las bitácoras (gestion de logs)
 
 // Manejo de errores
 app.use((err, req, res, next) => {
