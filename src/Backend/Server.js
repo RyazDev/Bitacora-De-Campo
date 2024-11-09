@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const cors = require('cors');
 const userRoutes = require('./Routes/userRoutes');
 const logRoutes = require('./Routes/logRoutes'); // Importar las rutas de log
 const errorHandler = require('./Middleware/errorMiddleware');
@@ -11,11 +12,12 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
+app.use(cors()); // Habilitar CORS
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Conectar a la base de datos
-mongoose.connect(process.env.DB_URI)
+mongoose.connect(process.env.DB_URI)  // Ya no es necesario agregar opciones de conexión aquí
     .then(() => console.log('Conectado a la base de datos'))
     .catch(err => console.error('Error de conexión a la base de datos:', err));
 
@@ -26,11 +28,11 @@ app.get('/', (req, res) => {
 
 // Rutas
 app.use('/api/users', userRoutes);  // Rutas de usuarios
-app.use('/api/logs', logRoutes);    // Rutas para las bitácoras (gestion de logs)
+app.use('/api/logs', logRoutes);    // Rutas para las bitácoras (gestión de logs)
 
 // Manejo de errores
 app.use((err, req, res, next) => {
-    console.error(err);
+    console.error(err.stack);
     res.status(500).json({ message: 'Error interno del servidor', error: err.message });
 });
 

@@ -1,64 +1,116 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { AuthContext } from '../../Context/AuthContext'; // Importamos el contexto de autenticación
-import './Header.css'; // Importamos el archivo de estilos
+import { AuthContext } from '../../Context/AuthContext';
+import './Header.css';
 
 const Header = () => {
-    const { isAuthenticated, user, logout } = useContext(AuthContext);
-    const [dropdownVisible, setDropdownVisible] = useState(false); // Para manejar el menú desplegable
+    const { isAuthenticated, logout } = useContext(AuthContext);
+    const [menuOpen, setMenuOpen] = useState(false);
+    const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+    const profileRef = useRef(null);
+    const menuRef = useRef(null);
 
-    // Función para alternar el estado del menú desplegable
-    const toggleDropdown = () => {
-        setDropdownVisible(!dropdownVisible);
+    // Verificar el tamaño de pantalla
+    const checkScreenSize = () => {
+        setIsMobile(window.innerWidth <= 768);
     };
 
-    // Función para cerrar el menú desplegable al hacer clic fuera
-    const closeDropdown = () => {
-        setDropdownVisible(false);
+    // Alternar el menú hamburguesa
+    const toggleMenu = () => {
+        setMenuOpen(!menuOpen);
+        setProfileDropdownOpen(false); // Cerrar el dropdown de perfil al abrir el menú
     };
 
-    // Se cierra el dropdown si se hace clic fuera
-    React.useEffect(() => {
-        document.addEventListener('click', closeDropdown);
+    // Alternar el dropdown de perfil
+    const toggleProfileDropdown = (e) => {
+        e.stopPropagation();
+        setProfileDropdownOpen(!profileDropdownOpen);
+    };
+
+    // Cerrar menú al hacer clic fuera
+    const handleClickOutside = (e) => {
+        if (
+            profileRef.current && !profileRef.current.contains(e.target) &&
+            menuRef.current && !menuRef.current.contains(e.target)
+        ) {
+            setMenuOpen(false);
+            setProfileDropdownOpen(false);
+        }
+    };
+
+    useEffect(() => {
+        checkScreenSize();
+        window.addEventListener('resize', checkScreenSize);
+        document.addEventListener('click', handleClickOutside);
+
         return () => {
-            document.removeEventListener('click', closeDropdown);
+            window.removeEventListener('resize', checkScreenSize);
+            document.removeEventListener('click', handleClickOutside);
         };
     }, []);
 
     return (
         <header className="header">
-            <div className="logo">
-                <Link to="/">MyApp</Link> {/* Aquí va el logo de la app */}
-            </div>
-            <nav>
-                <ul>
-                    {/* Links de navegación visibles siempre */}
-                    <li><Link to="/">Home</Link></li>
-                    <li><Link to="/about">About</Link></li>
+            <div className="header-container">
+                <div className="logo">
+                    <Link to="/">MyApp</Link>
+                </div>
 
-                    {/* Si el usuario no está autenticado, mostramos Login y Sign In */}
-                    {!isAuthenticated ? (
-                        <>
-                            <li><Link to="/login">Iniciar sesión</Link></li>
-                            <li><Link to="/register">Registrarse</Link></li>
-                        </>
-                    ) : (
-                        <>
-                            {/* Si está autenticado, mostramos el icono de perfil */}
-                            <li className="profile-icon" onClick={toggleDropdown}>
-                                {/* Mostrar inicial del usuario en el círculo */}
-                                <span className="profile-initial">{user.username[0]}</span>
-                                {dropdownVisible && (
-                                    <div className="dropdown-menu">
-                                        <Link to="/profile">Ver perfil</Link>
-                                        <button onClick={logout}>Cerrar sesión</button>
-                                    </div>
-                                )}
-                            </li>
-                        </>
-                    )}
-                </ul>
-            </nav>
+                {/* Botón de menú hamburguesa para móviles */}
+                {isMobile && (
+                    <button className="menu-toggle" onClick={toggleMenu}>
+                        ☰
+                    </button>
+                )}
+
+                {/* Menú desplegable para móviles */}
+                {isMobile && menuOpen && (
+                    <nav ref={menuRef} className="nav-menu-mobile">
+                        <ul>
+                            <li><Link to="/" onClick={toggleMenu}>Home</Link></li>
+                            <li><Link to="/about" onClick={toggleMenu}>About</Link></li>
+                            {isAuthenticated ? (
+                                <>
+                                    <li><Link to="/profile" onClick={toggleMenu}>Perfil</Link></li>
+                                    <li><button onClick={logout}>Cerrar sesión</button></li>
+                                </>
+                            ) : (
+                                <>
+                                    <li><Link to="/login" onClick={toggleMenu}>Iniciar sesión</Link></li>
+                                    <li><Link to="/register" onClick={toggleMenu}>Regístrate aquí</Link></li>
+                                </>
+                            )}
+                        </ul>
+                    </nav>
+                )}
+
+                {/* Menú para pantallas grandes */}
+                {!isMobile && (
+                    <nav className="nav-menu-large">
+                        <ul>
+                            <li><Link to="/">Home</Link></li>
+                            <li><Link to="/about">About</Link></li>
+                            {isAuthenticated ? (
+                                <li ref={profileRef} className="dropdown">
+                                    <span className="profile-toggle" onClick={toggleProfileDropdown}>Perfil</span>
+                                    {profileDropdownOpen && (
+                                        <ul className="profile-dropdown">
+                                            <li><Link to="/profile" onClick={() => setProfileDropdownOpen(false)}>Ver Perfil</Link></li>
+                                            <li><button onClick={logout}>Cerrar sesión</button></li>
+                                        </ul>
+                                    )}
+                                </li>
+                            ) : (
+                                <>
+                                    <li><Link to="/login">Iniciar sesión</Link></li>
+                                    <li><Link to="/register">Regístrate</Link></li>
+                                </>
+                            )}
+                        </ul>
+                    </nav>
+                )}
+            </div>
         </header>
     );
 };

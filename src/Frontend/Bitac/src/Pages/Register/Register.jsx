@@ -1,14 +1,14 @@
-// src/Pages/Register/Register.js
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';  // Hook de React Router
+import { useNavigate } from 'react-router-dom';  // Usamos useNavigate en lugar de useHistory
+import './Register.css'; // Importar el archivo CSS personalizado
 
 const Register = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState('colaborador');  // Rol predeterminado
+  const [role, setRole] = useState('colaborador');
   const [errorMessage, setErrorMessage] = useState('');
-  const history = useHistory();  // Inicializar el hook useHistory para redirigir
+  const navigate = useNavigate();  // Usamos useNavigate aquí
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -26,8 +26,7 @@ const Register = () => {
 
       if (response.status === 201) {
         alert('Registro exitoso! Redirigiendo al login.');
-        // Redirigir a la página de login después de un registro exitoso
-        history.push('/login');
+        navigate('/login');  // Usamos navigate para redirigir
       } else {
         setErrorMessage(data.errors ? data.errors[0] : 'Error en el registro');
       }
@@ -38,10 +37,10 @@ const Register = () => {
   };
 
   return (
-    <div>
+    <div className="register-container">
       <h2>Crear Cuenta</h2>
       <form onSubmit={handleRegister}>
-        <div>
+        <div className="form-group">
           <label>Nombre de usuario</label>
           <input 
             type="text" 
@@ -50,7 +49,7 @@ const Register = () => {
             required 
           />
         </div>
-        <div>
+        <div className="form-group">
           <label>Email</label>
           <input 
             type="email" 
@@ -59,7 +58,7 @@ const Register = () => {
             required 
           />
         </div>
-        <div>
+        <div className="form-group">
           <label>Contraseña</label>
           <input 
             type="password" 
@@ -68,7 +67,7 @@ const Register = () => {
             required 
           />
         </div>
-        <div>
+        <div className="form-group">
           <label>Rol</label>
           <select 
             value={role} 
@@ -79,12 +78,11 @@ const Register = () => {
             <option value="administrador">Administrador</option>
           </select>
         </div>
-        <button type="submit">Registrar</button>
+        <button type="submit" className="submit-btn">Registrar</button>
       </form>
-      {errorMessage && <p>{errorMessage}</p>}
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
     </div>
   );
 };
 
 export default Register;
-

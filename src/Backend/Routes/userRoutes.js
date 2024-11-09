@@ -7,7 +7,7 @@ const validationMiddleware = require('../Middleware/validationMiddleware');
 
 router.post('/register', validationMiddleware.validateRegisterUser, userController.registerUser);
 router.post('/login', validationMiddleware.validateLoginUser, userController.loginUser);
-router.get('/auth/user', authMiddleware.verifyToken, userController.getAuthenticatedUser);
+router.get('/user', authMiddleware.verifyToken, userController.getAuthenticatedUser);
 
 router.get('/', authMiddleware.verifyAdmin, userController.getAllUsers);
 router.put('/:identifier', authMiddleware.verifyAdmin, userController.updateUser);

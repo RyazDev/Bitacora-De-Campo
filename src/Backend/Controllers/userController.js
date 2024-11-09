@@ -28,55 +28,63 @@ exports.registerUser = async (req, res) => {
     }
 };
 
+// Iniciar sesión
 exports.loginUser = async (req, res) => {
-    const { email, password } = req.body;
-
     try {
+        const { email, password } = req.body;
+
+        // Verifica si el usuario existe
         const user = await User.findOne({ email });
         if (!user) {
             return res.status(404).json({ message: 'Usuario no encontrado.' });
         }
 
-        const isMatch = await user.comparePassword(password);
+        // Verifica si la contraseña es correcta
+        const isMatch = await user.comparePassword(password); // Suponiendo que tienes un método `comparePassword`
         if (!isMatch) {
-            return res.status(401).json({ message: 'Credenciales inválidas.' });
+            return res.status(400).json({ message: 'Contraseña incorrecta.' });
         }
 
-        const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        // Genera el token JWT
+        const token = jwt.sign(
+            { id: user._id, role: user.role }, // Incluye los datos necesarios en el payload
+            process.env.JWT_SECRET, // Tu clave secreta
+            { expiresIn: '1h' } // Expiración del token
+        );
 
-        res.status(200).json({
-            token,
-            user: {
-                id: user._id,
-                username: user.username,
-                email: user.email,
-                role: user.role
-            }
-        });
+        // Devuelve el token
+        res.json({ token });
     } catch (error) {
-        console.error('Error en el inicio de sesión:', error);
-        res.status(500).json({ message: 'Error en el servidor', error: error.message });
+        console.error(error);
+        res.status(500).json({ message: 'Error al intentar iniciar sesión.' });
     }
 };
 
-// En userController.js
+// controller/userController.js
 exports.getAuthenticatedUser = async (req, res) => {
     try {
-        const userId = req.user.id; // `req.user` viene del middleware de autenticación
-        const user = await User.findById(userId).select('-password'); // Excluye la contraseña
-
-        if (!user) {
-            return res.status(404).json({ message: 'Usuario no encontrado' });
+        // Verifica si el usuario está autenticado
+        if (!req.user || !req.user.id) {
+            return res.status(401).json({ message: 'No autorizado. No se encontró usuario.' });
         }
 
-        res.status(200).json(user);
+        const userId = req.user.id;
+        // Busca el usuario en la base de datos y excluye la contraseña
+        const user = await User.findById(userId).select('-password');
+
+        // Si no se encuentra el usuario, responde con un error 404
+        if (!user) {
+            return res.status(404).json({ message: 'Usuario no encontrado.' });
+        }
+
+        // Si el usuario se encuentra, responde con los datos del usuario
+        res.json(user);
     } catch (error) {
-        console.error('Error al obtener la información del usuario:', error);
-        res.status(500).json({ message: 'Error en el servidor' });
+        console.error(error);
+        res.status(500).json({ message: 'Error al obtener el usuario.' });
     }
 };
-
-
+  
 exports.getAllUsers = async (req, res) => {
     try {
         const users = await User.find(); 

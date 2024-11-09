@@ -1,0 +1,73 @@
+/* Register.css */
+
+.register-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #f9f3e6; /* Fondo suave que evoca calidez */
+    color: #333;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    margin: 50px auto;
+    font-family: Arial, sans-serif;
+}
+
+.register-container h2 {
+    color: #c7842c; /* Un tono cálido para el título */
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.register-container form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.register-container label {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+.register-container input,
+.register-container select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.register-container input:focus,
+.register-container select:focus {
+    border-color: #c7842c;
+    outline: none;
+    box-shadow: 0 0 5px rgba(199, 132, 44, 0.3);
+}
+
+.register-container button {
+    background-color: #c7842c;
+    color: white;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.register-container button:hover {
+    background-color: #a56822;
+}
+
+.register-container p {
+    color: #c44d4d; /* Para el mensaje de error */
+    font-size: 14px;
+    margin-top: 10px;
+    text-align: center;
+}

@@ -1,42 +1,85 @@
+/* Variables globales */
+:root {
+  --verde: #6DBE45;
+  --amarillo: #F0A500;
+  --blanco: #FFFFFF;
+  --gris: #F1F1F1;
+  --azul: #0074D9;
+  --naranja: #FF7F32;
+}
+
+/* Estilos globales */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: var(--gris);
+  color: #333;
+  height: 100vh; /* Asegura que el body ocupe toda la altura de la ventana */
+  display: flex; /* Usamos flex para centrar el contenido */
+  justify-content: center; /* Centra el contenido en el eje X */
+  align-items: center; /* Centra el contenido en el eje Y */
+}
+
 #root {
-  max-width: 1280px;
+  display: flex;
+  flex-direction: column;
+  width: 100%; /* Hace que ocupe todo el ancho disponible */
+  min-height: 100vh; /* Asegura que el contenedor root ocupe toda la altura */
+}
+
+/* Ajuste para evitar superposición con el header */
+.main-content {
+  flex: 1;
+  padding: 20px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  padding-top: 0; /* Elimina el padding-top para evitar empujar el contenido hacia abajo */
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* Contenedor */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+/* Botones */
+button {
+  width: 100%;
+  padding: 12px;
+  background-color: var(--naranja);
+  color: var(--blanco);
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: var(--amarillo);
+}
+
+/* Enlaces */
+a {
+  text-decoration: none;
+  color: var(--azul);
+}
+
+a:hover {
+  text-decoration: none; /* Quitar subrayado al pasar el mouse */
+}
+
+/* Media query para pantallas pequeñas */
+@media (max-width: 768px) {
+  .main-content {
+    padding: 10px;
+    padding-top: 80px; /* Ajuste para evitar superposición en pantallas pequeñas */
   }
-  to {
-    transform: rotate(360deg);
-  }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}

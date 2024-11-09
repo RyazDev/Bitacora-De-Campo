@@ -1,29 +1,35 @@
 // middleware/authMiddleware.js
 const jwt = require('jsonwebtoken');
 
-// Verificar que el token es válido
 exports.verifyToken = (req, res, next) => {
-    const token = req.headers['authorization']?.split(' ')[1]; // Obtener token desde el encabezado
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+
     if (!token) {
-        return res.status(403).json({ message: 'Token no proporcionado.' });
+        return res.status(401).json({ message: 'Token no proporcionado. No autorizado.' });
     }
 
-    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
         if (err) {
-            return res.status(401).json({ message: 'Token no válido.' });
+            return res.status(403).json({ message: 'Token no válido.' });
         }
-        req.userId = decoded.id;   // El ID del usuario decodificado
-        req.role = decoded.role;   // El rol del usuario decodificado
-        next(); // Pasamos al siguiente middleware o controlador
+
+        req.user = user; // Aquí estamos asignando el 'user' decodificado al objeto req.user
+        next(); // Pasa al siguiente middleware o controlador
     });
 };
 
+
+// Middleware para verificar si el usuario es un administrador
 exports.verifyAdmin = (req, res, next) => {
+    // Asegúrate de que el token esté verificado primero
     exports.verifyToken(req, res, () => {
-        if (req.role !== 'administrador') {
+        // Verificar el rol del usuario
+        if (req.user.role !== 'administrador') {  // Aquí se accede a req.user.role
             return res.status(403).json({ message: 'Acceso denegado. Solo para administradores.' });
         }
         next();
     });
 };
+
 

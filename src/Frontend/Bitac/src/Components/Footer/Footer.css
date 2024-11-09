@@ -1,0 +1,49 @@
+/* Footer */
+.footer {
+  background-color: #333; /* Mismo color que el header */
+  padding: 20px 0;
+  text-align: center;
+  color: #fff;
+  font-size: 0.9rem;
+  border-top: 1px solid #444; /* Borde más oscuro para una mejor separación */
+  position: relative; /* Permite que el footer aparezca al final del contenido */
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer p {
+  margin: 0;
+  color: #fff;
+}
+
+.footer-nav {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.footer-nav a {
+  color: #f0f0f0; /* Color más claro para mejor contraste */
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-nav a:hover {
+  color: var(--amarillo); /* Cambia de color al pasar el mouse */
+}
+
+/* Ajuste para que el footer se muestre al final de la página */
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1; /* Permite que el contenido ocupe todo el espacio disponible antes del footer */
+}
+

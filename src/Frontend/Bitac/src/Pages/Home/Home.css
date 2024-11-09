@@ -1,0 +1,149 @@
+/* Estilos generales */
+.home-container {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    padding: 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+    color: #333;
+}
+
+/* Sección de Introducción */
+.intro-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 20px;
+}
+
+.intro-description {
+    padding: 20px;
+}
+
+.intro-description h1 {
+    color: var(--verde);
+    font-size: 2.5rem;
+}
+
+.intro-description p {
+    font-size: 1.2rem;
+    color: #555;
+}
+
+.intro-image {
+    position: relative;
+    text-align: center;
+}
+
+.intro-image img {
+    max-width: 100%;
+    border-radius: 10px;
+}
+
+.start-button {
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--naranja);
+    color: var(--blanco);
+    border: none;
+    border-radius: 6px;
+    padding: 12px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.start-button:hover {
+    background-color: var(--amarillo);
+}
+
+/* Sección de Vista Previa del Sistema */
+.preview-section {
+    text-align: center;
+    padding: 20px;
+}
+
+.preview-section h2 {
+    color: var(--verde);
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.preview-section p {
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.system-preview {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.preview-item {
+    background-color: var(--gris);
+    padding: 20px;
+    border-radius: 8px;
+    color: #333;
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+/* Sección de Llamada a la Acción */
+.call-to-action-section {
+    text-align: center;
+    padding: 20px;
+    background-color: var(--gris);
+    border-radius: 8px;
+}
+
+.call-to-action-section h2 {
+    color: var(--verde);
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.benefits-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+
+.benefits-list li {
+    color: #555;
+    font-size: 1.1rem;
+    padding: 5px 0;
+}
+
+.cta-button {
+    margin-top: 20px;
+    background-color: var(--naranja);
+    color: var(--blanco);
+    border: none;
+    border-radius: 6px;
+    padding: 12px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.cta-button:hover {
+    background-color: var(--amarillo);
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .intro-section {
+        grid-template-columns: 1fr;
+    }
+
+    .system-preview {
+        grid-template-columns: 1fr;
+    }
+}

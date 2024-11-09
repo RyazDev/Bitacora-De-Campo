@@ -1,0 +1,102 @@
+/* Estilos Generales */
+.profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f4f7fa;
+    padding: 20px;
+  }
+  
+  .profile-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+  }
+  
+  .profile-header h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .error-message {
+    color: #f44336;
+    font-size: 1rem;
+  }
+  
+  .profile-content {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+  }
+  
+  .profile-avatar img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 3px solid #e0e0e0;
+    object-fit: cover;
+  }
+  
+  .profile-details {
+    flex-grow: 1;
+  }
+  
+  .profile-details p {
+    font-size: 1.2rem;
+    margin: 10px 0;
+    color: #555;
+  }
+  
+  .profile-details strong {
+    color: #333;
+  }
+  
+  .edit-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+  }
+  
+  .edit-btn:hover {
+    background-color: #45a049;
+  }
+  
+  .loading {
+    font-size: 1.5rem;
+    color: #888;
+    text-align: center;
+  }
+  
+  @media (max-width: 768px) {
+    .profile-content {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  
+    .profile-avatar img {
+      width: 120px;
+      height: 120px;
+    }
+  
+    .profile-details p {
+      font-size: 1rem;
+    }
+  
+    .edit-btn {
+      width: 100%;
+    }
+  }
+  
