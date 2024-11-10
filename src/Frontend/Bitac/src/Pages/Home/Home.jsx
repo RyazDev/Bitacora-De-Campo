@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Home.css'; // Asegúrate de que esté bien referenciado el archivo de CSS
+import { AuthContext } from '../../Context/AuthContext'; // Asegúrate de importar correctamente el contexto
+import './Home.css';
 
 const HomePage = () => {
     const navigate = useNavigate();
+    const { isAuthenticated } = useContext(AuthContext); // Verificamos si el usuario está autenticado
 
-    const handleNavigateToLogin = () => {
-        navigate('/login'); // Redirige a la página de inicio de sesión
+    // Función para manejar la navegación del botón "Comenzar"
+    const handleNavigate = () => {
+        if (isAuthenticated) {
+            navigate('/bitacoras'); // Si el usuario está autenticado, va a la página de Bitácoras
+        } else {
+            navigate('/login'); // Si no está autenticado, va a la página de Login
+        }
     };
 
     return (
@@ -19,7 +26,7 @@ const HomePage = () => {
                 </div>
                 <div className="intro-image">
                     <img src="ruta-a-la-imagen.jpg" alt="Imagen de la planta" />
-                    <button className="start-button" onClick={handleNavigateToLogin}>Comenzar</button>
+                    <button className="start-button" onClick={handleNavigate}>Comenzar</button>
                 </div>
             </section>
 
@@ -44,7 +51,7 @@ const HomePage = () => {
                     <li>Decisiones Basadas en Datos</li>
                     <li>Optimización del Proceso de Crecimiento</li>
                 </ul>
-                <button className="cta-button" onClick={handleNavigateToLogin}>Comenzar</button>
+                <button className="cta-button" onClick={handleNavigate}>Comenzar</button>
             </section>
         </div>
     );

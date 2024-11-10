@@ -11,6 +11,7 @@ const Profile = () => {
     const fetchUserData = async () => {
       const token = localStorage.getItem('token');
 
+      // Si no hay token, redirigimos al login
       if (!token) {
         setErrorMessage('No se encontró un token. Por favor, inicia sesión.');
         navigate('/login');
@@ -42,8 +43,11 @@ const Profile = () => {
       }
     };
 
+    // Solo ejecutamos la función de obtener datos si el token está presente
     fetchUserData();
-  }, [navigate]);  // Aquí pasamos solo 'navigate' como dependencia, ya que no cambia durante el ciclo de vida del componente
+
+    // La dependencia de 'navigate' es correcta ya que no cambia durante el ciclo de vida del componente
+  }, [navigate]);
 
   const handleEditProfile = () => {
     navigate('/edit-profile'); // Ruta para editar el perfil

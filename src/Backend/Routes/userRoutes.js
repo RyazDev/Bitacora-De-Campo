@@ -9,9 +9,9 @@ router.post('/register', validationMiddleware.validateRegisterUser, userControll
 router.post('/login', validationMiddleware.validateLoginUser, userController.loginUser);
 router.get('/user', authMiddleware.verifyToken, userController.getAuthenticatedUser);
 
-router.get('/', authMiddleware.verifyAdmin, userController.getAllUsers);
-router.put('/:identifier', authMiddleware.verifyAdmin, userController.updateUser);
-router.delete('/:identifier', authMiddleware.verifyAdmin, userController.deleteUser);
+router.get('/', authMiddleware.verifyToken, authMiddleware.verifyAdmin, userController.getAllUsers);
+router.put('/:identifier', authMiddleware.verifyToken, authMiddleware.verifyAdmin, userController.updateUser);
+router.delete('/:identifier', authMiddleware.verifyToken, authMiddleware.verifyAdmin, userController.deleteUser);
 
 module.exports = router;
 

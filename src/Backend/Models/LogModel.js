@@ -4,35 +4,41 @@ const Schema = mongoose.Schema;
 // Definir el esquema de la bitácora
 const logSchema = new Schema(
   {
-    title: { type: String, required: true },  // Título de la bitácora
-    samplingDate: { type: Date, required: true },  // Fecha de muestreo
+    title: { type: String, required: true },
+    samplingDate: { type: Date, required: true },
     location: {
-      type: { type: String, enum: ['Point'], default: 'Point' },  // Tipo de la ubicación (geoespacial)
-      coordinates: { type: [Number], required: true },  // Coordenadas geográficas [longitud, latitud]
+      type: { type: String, enum: ['Point'], default: 'Point' },
+      coordinates: { type: [Number], required: true },
     },
-    weatherConditions: { type: String },  // Condiciones meteorológicas
-    habitatDescription: { type: String },  // Descripción del hábitat
+    weatherConditions: { type: String, default: '' },  // Hacer opcional
+    habitatDescription: { type: String, default: '' },  // Hacer opcional
     speciesCollected: [
       {
-        scientificName: { type: String },  // Nombre científico
-        commonName: { type: String },  // Nombre común
-        family: { type: String },  // Familia botánica
-        sampleCount: { type: Number },  // Conteo de muestras recolectadas
-        plantState: { type: String },  // Estado de la planta (Viva, Seca, etc.)
-        photos: [{ type: String }],  // URLs de fotos asociadas a la especie
+        scientificName: { type: String },
+        commonName: { type: String },
+        family: { type: String },
+        sampleCount: { type: Number },
+        plantState: { type: String },
+        photos: [{ type: String }],
       },
     ],
-    additionalNotes: { type: String },  // Notas adicionales
-    photos: [{ type: String }],  // URLs de fotos del sitio de muestreo
+    additionalNotes: { type: String, default: '' },  // Hacer opcional
+    photos: [{ type: String }],
+    author: { 
+      type: mongoose.Schema.Types.ObjectId, 
+      ref: 'User', 
+      required: true,  // Asegúrate de que este campo sea obligatorio
+    },
   },
   {
-    timestamps: true,  // Guardar las fechas de creación y actualización
+    timestamps: true,  // Agregar timestamps automáticamente para crear y actualizar
   }
 );
 
 // Indicar que la localización será geoespacial (index geoespacial)
 logSchema.index({ location: '2dsphere' });
 
-module.exports = mongoose.model('Log', logSchema);  // Exportar el modelo de la bitácora
+// Exportar el modelo de la bitácora
+module.exports = mongoose.model('Log', logSchema);
 
 

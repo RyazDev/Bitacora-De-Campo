@@ -4,16 +4,21 @@ const router = express.Router();
 const logController = require('../Controllers/logController');
 const authMiddleware = require('../Middleware/authMiddleware');
 const rolesMiddleware = require('../Middleware/rolesMiddleware');
+const { checkLogExists } = require('../Middleware/checkLogExists');  // Importamos el middleware
 
-router.post('/', authMiddleware.verifyToken, rolesMiddleware(['administrador', 'investigador']), logController.createLog);
+// Ruta para crear bitácora
+router.post('/', authMiddleware.verifyToken, logController.createLog);
 
-router.get('/', logController.getLogs);
+// Ruta para obtener todas las bitácoras públicas
+router.get('/', authMiddleware.verifyToken, logController.getLogs);
 
-router.get('/search', logController.searchLogs);  // Ruta de búsqueda
+// Ruta de búsqueda de bitácoras
+router.get('/search', authMiddleware.verifyToken, logController.searchLogs);
 
-router.put('/:id', authMiddleware.verifyToken, rolesMiddleware(['administrador', 'investigador']), logController.updateLog);
+// Ruta para actualizar una bitácora por su ID
+router.put('/:id', authMiddleware.verifyToken, rolesMiddleware(['administrador', 'investigador']),checkLogExists, logController.updateLog);
 
-router.delete('/:id', authMiddleware.verifyToken, rolesMiddleware(['administrador', 'investigador']), logController.deleteLog);
+// Ruta para eliminar una bitácora por su ID
+router.delete('/:id', authMiddleware.verifyToken,  rolesMiddleware(['administrador', 'investigador']),checkLogExists, logController.deleteLog);
 
 module.exports = router;
-

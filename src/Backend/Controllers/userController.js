@@ -33,6 +33,11 @@ exports.loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
 
+        // Validación de entrada
+        if (!email || !password) {
+            return res.status(400).json({ message: 'Email y contraseña son requeridos.' });
+        }
+
         // Verifica si el usuario existe
         const user = await User.findOne({ email });
         if (!user) {
@@ -40,20 +45,29 @@ exports.loginUser = async (req, res) => {
         }
 
         // Verifica si la contraseña es correcta
-        const isMatch = await user.comparePassword(password); // Suponiendo que tienes un método `comparePassword`
+        const isMatch = await user.comparePassword(password);
         if (!isMatch) {
             return res.status(400).json({ message: 'Contraseña incorrecta.' });
         }
 
         // Genera el token JWT
         const token = jwt.sign(
-            { id: user._id, role: user.role }, // Incluye los datos necesarios en el payload
-            process.env.JWT_SECRET, // Tu clave secreta
-            { expiresIn: '1h' } // Expiración del token
+            { _id: user._id, role: user.role },
+            process.env.JWT_SECRET,
+            { expiresIn: '1h' }
         );
 
-        // Devuelve el token
-        res.json({ token });
+        // Devuelve el token y datos del usuario
+        res.json({
+            message: 'Inicio de sesión exitoso.',
+            token,
+            user: {
+                _id: user._id,
+                username: user.username,
+                email: user.email,
+                role: user.role,
+            },
+        });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Error al intentar iniciar sesión.' });
@@ -64,11 +78,11 @@ exports.loginUser = async (req, res) => {
 exports.getAuthenticatedUser = async (req, res) => {
     try {
         // Verifica si el usuario está autenticado
-        if (!req.user || !req.user.id) {
+        if (!req.user || !req.user._id) {  // Cambia req.user.id por req.user._id
             return res.status(401).json({ message: 'No autorizado. No se encontró usuario.' });
         }
 
-        const userId = req.user.id;
+        const userId = req.user._id;  // Cambia req.user.id por req.user._id
         // Busca el usuario en la base de datos y excluye la contraseña
         const user = await User.findById(userId).select('-password');
 
@@ -84,11 +98,13 @@ exports.getAuthenticatedUser = async (req, res) => {
         res.status(500).json({ message: 'Error al obtener el usuario.' });
     }
 };
+
   
 exports.getAllUsers = async (req, res) => {
     try {
+        // Consulta para obtener todos los usuarios
         const users = await User.find(); 
-        res.status(200).json(users);
+        res.status(200).json(users);  // Devuelve la lista de usuarios
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Error al obtener los usuarios.', error: error.message });
