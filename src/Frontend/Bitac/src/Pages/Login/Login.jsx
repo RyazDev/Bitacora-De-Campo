@@ -11,13 +11,11 @@ const LoginPage = () => {
     const { login, isAuthenticated, loading } = useContext(AuthContext);
     const navigate = useNavigate();
 
-    // Validación del formato de correo electrónico
     const validateEmail = (email) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
     };
 
-    // Validación de la contraseña
     const validatePassword = (password) => {
         if (password.length < 8) {
             return 'La contraseña debe tener al menos 8 caracteres.';
@@ -28,31 +26,26 @@ const LoginPage = () => {
         return null;
     };
 
-    // Redirección automática si el usuario ya está autenticado
     useEffect(() => {
         if (isAuthenticated) {
-            navigate('/profile'); // Redirige a la página de perfil si ya está autenticado
+            navigate('/profile'); 
         }
     }, [isAuthenticated, navigate]);
 
-    // Manejo del envío del formulario
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setError(''); // Reinicia el error
+        setError(''); 
 
-        // Validaciones de campos vacíos
         if (!email || !password) {
             setError('Por favor, completa todos los campos.');
             return;
         }
 
-        // Validar formato del correo
         if (!validateEmail(email)) {
             setError('Formato de correo electrónico inválido.');
             return;
         }
 
-        // Validar la contraseña
         const passwordError = validatePassword(password);
         if (passwordError) {
             setError(passwordError);
@@ -60,11 +53,9 @@ const LoginPage = () => {
         }
 
         try {
-            // Intentar iniciar sesión
             await login({ email, password });
-            navigate('/profile'); // Redirige a la página de perfil después de iniciar sesión correctamente
+            navigate('/profile'); 
         } catch (error) {
-            // Mostrar el mensaje de error proporcionado por el servicio de autenticación
             setError(error.message || 'Error al iniciar sesión.');
         }
     };

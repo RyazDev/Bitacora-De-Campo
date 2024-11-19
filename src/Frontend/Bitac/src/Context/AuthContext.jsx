@@ -1,19 +1,17 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { getAuthenticatedUser, loginUser, registerUser, logoutUser } from '../Services/authService';
 
-// Crear el contexto de autenticación
 export const AuthContext = createContext();
 
-// Proveedor de autenticación
-export const AuthProvider = ({ children }) => {  // Asegúrate de que children sea recibido como prop
+export const AuthProvider = ({ children }) => {  
     const [user, setUser] = useState(null);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [loading, setLoading] = useState(true);
 
-    // Verificar si hay un token y obtener los datos del usuario
+    // Verificar token y obtener los datos del usuario
     useEffect(() => {
         const checkAuth = async () => {
-            const token = localStorage.getItem('token');
+            const token = sessionStorage.getItem('token'); // Usar sessionStorage para múltiples sesiones
             if (token) {
                 try {
                     const userData = await getAuthenticatedUser(token);
@@ -27,11 +25,25 @@ export const AuthProvider = ({ children }) => {  // Asegúrate de que children s
                     setLoading(false);
                 }
             } else {
-                setLoading(false); // No hay token, no es necesario verificar más
+                setLoading(false); 
             }
         };
 
         checkAuth();
+
+        // Escuchar cambios en el almacenamiento para cerrar sesión si es necesario
+        const syncLogout = (event) => {
+            if (event.key === 'token' && event.newValue === null) {
+                setUser(null);
+                setIsAuthenticated(false);
+            }
+        };
+
+        window.addEventListener('storage', syncLogout);
+
+        return () => {
+            window.removeEventListener('storage', syncLogout);
+        };
     }, []);
 
     // Función para iniciar sesión en el contexto
@@ -39,7 +51,7 @@ export const AuthProvider = ({ children }) => {  // Asegúrate de que children s
         setLoading(true);
         try {
             const data = await loginUser(credentials);
-            localStorage.setItem('token', data.token);  // Guardar el token en localStorage
+            sessionStorage.setItem('token', data.token);  // Usar sessionStorage
             setUser(data.user);
             setIsAuthenticated(true);
         } catch (error) {
@@ -50,26 +62,22 @@ export const AuthProvider = ({ children }) => {  // Asegúrate de que children s
         }
     };
 
-    // Función para registrar un nuevo usuario
     const register = async (userData) => {
         try {
             await registerUser(userData);
-            await login(userData); // Iniciar sesión automáticamente después de registrar
+            await login(userData); // Iniciar sesión después de registro
         } catch (error) {
             console.error('Error al registrar usuario:', error.message || error);
             throw error;
         }
     };
 
-    // Función para cerrar sesión
     const logout = () => {
-        logoutUser();
-        localStorage.removeItem('token'); // Eliminar el token de localStorage
+        sessionStorage.removeItem('token'); // Usar sessionStorage
         setUser(null);
         setIsAuthenticated(false);
     };
 
-    // Valor del contexto
     const contextValue = {
         user,
         isAuthenticated,
@@ -84,7 +92,7 @@ export const AuthProvider = ({ children }) => {  // Asegúrate de que children s
             {loading ? (
                 <div className="loading">Cargando...</div>
             ) : (
-                children  // Aquí pasamos los componentes hijos correctamente
+                children  
             )}
         </AuthContext.Provider>
     );

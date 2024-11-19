@@ -19,7 +19,7 @@ const Header = () => {
     // Alternar el menú hamburguesa
     const toggleMenu = () => {
         setMenuOpen(!menuOpen);
-        setProfileDropdownOpen(false); // Cerrar el dropdown de perfil al abrir el menú
+        setProfileDropdownOpen(false); 
     };
 
     // Alternar el dropdown de perfil
@@ -57,14 +57,12 @@ const Header = () => {
                     <Link to="/">MyApp</Link>
                 </div>
 
-                {/* Botón de menú hamburguesa para móviles */}
                 {isMobile && (
                     <button className="menu-toggle" onClick={toggleMenu}>
                         ☰
                     </button>
                 )}
 
-                {/* Menú desplegable para móviles */}
                 {isMobile && menuOpen && (
                     <nav ref={menuRef} className="nav-menu-mobile">
                         <ul>
@@ -85,7 +83,6 @@ const Header = () => {
                     </nav>
                 )}
 
-                {/* Menú para pantallas grandes */}
                 {!isMobile && (
                     <nav className="nav-menu-large">
                         <ul>

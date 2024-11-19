@@ -1,0 +1,143 @@
+/* Estilos base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  body {
+    background-color: #f5f7fa;
+    color: #333;
+  }
+  
+  /* Contenedor principal */
+  .create-log-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #0073e6;
+  }
+  
+  /* Mensaje de error */
+  .error-message {
+    color: #e74c3c;
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  
+  /* Estilo del formulario */
+  .create-log-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  /* Etiquetas y campos de entrada */
+  label {
+    font-weight: 500;
+    color: #555;
+  }
+  
+  input[type="text"],
+  input[type="number"],
+  input[type="date"],
+  textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+  }
+  
+  input[type="text"]:focus,
+  input[type="number"]:focus,
+  input[type="date"]:focus,
+  textarea:focus {
+    border-color: #0073e6;
+  }
+  
+  /* Campos de coordenadas */
+  input[placeholder="Latitud"],
+  input[placeholder="Longitud"] {
+    width: 48%;
+    display: inline-block;
+  }
+  
+  /* Área de texto */
+  textarea {
+    min-height: 100px;
+  }
+  
+  /* Botón de añadir especie */
+  button[type="button"] {
+    padding: 10px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  button[type="button"]:hover {
+    background-color: #218838;
+  }
+  
+  /* Botón de envío */
+  button[type="submit"] {
+    padding: 12px;
+    background-color: #0073e6;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #005bb5;
+  }
+  
+  button[type="submit"]:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+  }
+  
+  /* Fieldset para añadir especie */
+  fieldset {
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 5px;
+  }
+  
+  legend {
+    padding: 0 10px;
+    font-weight: bold;
+    color: #0073e6;
+  }
+  
+  /* Responsivo para pantallas más pequeñas */
+  @media (max-width: 480px) {
+    input[placeholder="Latitud"],
+    input[placeholder="Longitud"] {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  
+    button[type="button"],
+    button[type="submit"] {
+      width: 100%;
+    }
+  }

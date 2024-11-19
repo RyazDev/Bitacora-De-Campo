@@ -8,6 +8,10 @@ import AboutPage from './Pages/About/About';
 import LoginPage from './Pages/Login/Login';
 import RegisterPage from './Pages/Register/Register';
 import ProfilePage from './Pages/Profile/Profile';
+import FieldLogs from './Pages/FieldLogs/FieldLogs'; 
+import LogDetails from './Pages/LogDetails/LogDetails'; 
+import CreateLog from './Pages/CreateLog/CreateLog'; 
+
 import ProtectedRoute from './Components/ProtectedRoute';
 
 function App() {
@@ -21,6 +25,11 @@ function App() {
             <Route path="/about" element={<AboutPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
+            <Route path="/log/:id" element={<LogDetails />} />
+            <Route path="/fieldlogs" element={<FieldLogs />} />
+            <Route path="/createlog" element={<CreateLog />} />
+
+            {/* Rutas protegidas */}
             <Route
               path="/profile"
               element={
@@ -29,6 +38,7 @@ function App() {
                 </ProtectedRoute>
               }
             />
+                     
           </Routes>
         </div>
         <Footer />

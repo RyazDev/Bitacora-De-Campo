@@ -75,7 +75,6 @@ const Profile = () => {
             <p><strong>Nombre de usuario:</strong> {user.username}</p>
             <p><strong>Email:</strong> {user.email}</p>
             <p><strong>Rol:</strong> {user.role}</p>
-            <button className="edit-btn" onClick={handleEditProfile}>Editar Perfil</button>
           </div>
         </div>
       </div>

@@ -19,36 +19,33 @@ body {
   font-family: 'Roboto', sans-serif;
   background-color: var(--gris);
   color: #333;
-  height: 100vh; /* Asegura que el body ocupe toda la altura de la ventana */
-  display: flex; /* Usamos flex para centrar el contenido */
-  justify-content: center; /* Centra el contenido en el eje X */
-  align-items: center; /* Centra el contenido en el eje Y */
+  height: 100vh; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
 }
 
 #root {
   display: flex;
   flex-direction: column;
-  width: 100%; /* Hace que ocupe todo el ancho disponible */
-  min-height: 100vh; /* Asegura que el contenedor root ocupe toda la altura */
+  width: 100%; 
+  min-height: 100vh; 
 }
 
-/* Ajuste para evitar superposición con el header */
 .main-content {
   flex: 1;
   padding: 20px;
   max-width: 1200px;
   margin: 0 auto;
-  padding-top: 0; /* Elimina el padding-top para evitar empujar el contenido hacia abajo */
+  padding-top: 0; 
 }
 
-/* Contenedor */
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
 }
 
-/* Botones */
 button {
   width: 100%;
   padding: 12px;
@@ -65,21 +62,19 @@ button:hover {
   background-color: var(--amarillo);
 }
 
-/* Enlaces */
 a {
   text-decoration: none;
   color: var(--azul);
 }
 
 a:hover {
-  text-decoration: none; /* Quitar subrayado al pasar el mouse */
+  text-decoration: none; 
 }
 
-/* Media query para pantallas pequeñas */
 @media (max-width: 768px) {
   .main-content {
     padding: 10px;
-    padding-top: 80px; /* Ajuste para evitar superposición en pantallas pequeñas */
+    padding-top: 80px; 
   }
 }
 

@@ -5,7 +5,6 @@ import axios from 'axios';
 const API_URL = 'http://localhost:5000/api/users';
 
 /**
- * Registrar un nuevo usuario
  * @param {Object} userData - Datos del usuario
  * @returns {Object} - Respuesta del servidor
  */

@@ -1,0 +1,34 @@
+/* src/Components/CreateLogButton/CreateLogButton.css */
+
+.create-log-button {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .create-log-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .create-log-button:focus {
+    outline: 3px solid #0056b3;
+    outline-offset: 2px;
+  }
+  
+  .create-log-button:active {
+    background-color: #003d80;
+    transform: scale(0.98);
+  }
+  
+  .create-log-button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }  

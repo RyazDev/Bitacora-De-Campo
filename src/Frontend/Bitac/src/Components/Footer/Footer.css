@@ -1,12 +1,12 @@
 /* Footer */
 .footer {
-  background-color: #333; /* Mismo color que el header */
+  background-color: #333; 
   padding: 20px 0;
   text-align: center;
   color: #fff;
   font-size: 0.9rem;
-  border-top: 1px solid #444; /* Borde más oscuro para una mejor separación */
-  position: relative; /* Permite que el footer aparezca al final del contenido */
+  border-top: 1px solid #444; 
+  position: relative; 
 }
 
 .footer-content {
@@ -27,16 +27,15 @@
 }
 
 .footer-nav a {
-  color: #f0f0f0; /* Color más claro para mejor contraste */
+  color: #f0f0f0; 
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
 .footer-nav a:hover {
-  color: var(--amarillo); /* Cambia de color al pasar el mouse */
+  color: var(--amarillo); 
 }
 
-/* Ajuste para que el footer se muestre al final de la página */
 #root {
   display: flex;
   flex-direction: column;
@@ -44,6 +43,6 @@
 }
 
 .main-content {
-  flex: 1; /* Permite que el contenido ocupe todo el espacio disponible antes del footer */
+  flex: 1; 
 }
 

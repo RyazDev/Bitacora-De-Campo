@@ -1,0 +1,174 @@
+/* FieldLogs.css */
+
+/* Estilos generales */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f0f2f5;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+.field-logs-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.search-bar-container,
+.filters-container,
+.create-log-button-container,
+.export-data-container {
+  width: 100%;
+  max-width: 800px;
+}
+
+.search-bar-container {
+  margin-bottom: 10px;
+}
+
+.filters-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.create-log-button-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.loading-spinner,
+.error-message {
+  text-align: center;
+  color: #555;
+}
+
+.logs-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  width: 100%;
+}
+
+.log-card-container button {
+  margin-top: 10px;
+  padding: 8px 12px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  outline: none;  
+  box-shadow: none; 
+}
+
+.log-card-container button:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.log-card-container button:hover {
+  background-color: #0056b3;
+}
+
+button {
+  margin-top: 10px;
+  padding: 8px 12px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  outline: none !important;  
+  box-shadow: none !important;  
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.export-data-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* --- Estilos para mensajes de error --- */
+.error-message p {
+  text-align: center;
+  font-size: 1.2rem;
+  color: var(--error-color);
+}
+
+.refresh-button-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.refresh-logs-button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.refresh-logs-button:hover {
+  background-color: #0056b3;
+}
+
+/* Estilos para el botón de eliminar campo */
+.delete-field-button {
+  background-color: #e74c3c;
+  color: white;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.delete-field-button:hover {
+  background-color: #c0392b;
+}
+
+.delete-field-button:focus {
+  outline: none;
+}
+
+/* --- Breakpoints responsivos --- */
+@media (max-width: 768px) {
+  .field-logs-container {
+    padding: 15px;
+  }
+
+  .logs-list {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .logs-list {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .log-card-container button {
+    width: 100%;
+  }
+}

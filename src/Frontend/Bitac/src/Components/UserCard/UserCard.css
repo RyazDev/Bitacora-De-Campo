@@ -1,0 +1,143 @@
+/* Estilos base para el contenedor de la tarjeta */
+.log-card-container {
+  width: 100%;
+  max-width: 400px;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 20px auto;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.log-card-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Encabezado de la tarjeta */
+.log-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+.log-card-header h3 {
+  font-size: 1.4rem;
+  color: #333;
+  font-weight: 600;
+}
+
+.log-card-date {
+  font-size: 0.9rem;
+  color: #777;
+}
+
+/* Cuerpo de la tarjeta */
+.log-card-body {
+  font-size: 1rem;
+  color: #444;
+  line-height: 1.5;
+}
+
+.log-card-body p {
+  margin: 8px 0;
+}
+
+/* Texto en negrita para etiquetas */
+.log-card-body strong {
+  color: #333;
+  font-weight: 600;
+}
+
+/* Pie de la tarjeta */
+.log-card-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 15px;
+}
+
+/* Botón de ver detalles */
+.view-details-btn {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.view-details-btn:hover {
+  background-color: #0056b3;
+}
+
+.view-details-btn:active {
+  transform: scale(0.98);
+}
+
+/* Responsivo: Ajustes para pantallas pequeñas */
+@media (max-width: 480px) {
+  .log-card-container {
+    padding: 15px;
+    max-width: 100%;
+  }
+
+  .log-card-header h3 {
+    font-size: 1.2rem;
+  }
+
+  .log-card-body p {
+    font-size: 0.9rem;
+  }
+
+  .view-details-btn {
+    font-size: 0.85rem;
+    padding: 8px 16px;
+  }
+}
+
+/* Responsivo: Ajustes para pantallas medianas */
+@media (min-width: 481px) and (max-width: 768px) {
+  .log-card-container {
+    padding: 18px;
+    max-width: 90%;
+  }
+
+  .log-card-header h3 {
+    font-size: 1.3rem;
+  }
+
+  .view-details-btn {
+    padding: 9px 18px;
+  }
+}
+
+/* Tema oscuro */
+body.dark-mode .log-card-container {
+  background-color: #333;
+  color: #f9f9f9;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode .log-card-header h3 {
+  color: #fff;
+}
+
+body.dark-mode .log-card-body strong {
+  color: #ccc;
+}
+
+body.dark-mode .view-details-btn {
+  background-color: #555;
+  color: #ddd;
+}
+
+body.dark-mode .view-details-btn:hover {
+  background-color: #444;
+}

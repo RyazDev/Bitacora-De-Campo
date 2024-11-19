@@ -1,25 +1,23 @@
 /* Estilos generales */
 body {
-    margin: 0; /* Elimina el margen del body */
-    padding: 0; /* Elimina el padding del body */
+    margin: 0; 
+    padding: 0;
   }
   
-  /* Asegura que el header ocupe todo el ancho */
   .header {
-    width: 100%;  /* Ocupa todo el ancho disponible */
+    width: 100%;  
     background-color: #333;
     color: white;
     padding: 10px 20px;
-    box-sizing: border-box;  /* Asegura que el relleno no afecte el ancho */
-    margin: 0;  /* Elimina cualquier margen adicional */
+    box-sizing: border-box;  
+    margin: 0; 
   }
   
-  /* Contenedor del header para manejar el layout */
   .header-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 100%;  /* Asegura que ocupe todo el ancho disponible */
+    width: 100%;  
   }
 
 .logo a {
@@ -61,10 +59,9 @@ body {
 
 .nav-menu-mobile a {
     color: white;
-    text-decoration: none; /* Elimina el subrayado */
+    text-decoration: none; 
 }
 
-/* Menú para pantallas grandes */
 .nav-menu-large {
     display: flex;
     align-items: center;
@@ -84,10 +81,9 @@ body {
 
 .nav-menu-large a {
     color: white;
-    text-decoration: none; /* Elimina el subrayado */
+    text-decoration: none; 
 }
 
-/* Dropdown de perfil */
 .dropdown {
     position: relative;
     cursor: pointer;
@@ -96,31 +92,28 @@ body {
 
 .dropdown span {
     color: white;
-    text-decoration: none; /* Elimina el subrayado */
+    text-decoration: none; 
     cursor: pointer;
 }
 
-/* Estilo del texto de perfil */
 .profile-toggle {
     color: white;
-    text-decoration: none; /* Elimina el subrayado */
+    text-decoration: none; 
     cursor: pointer;
     padding: 10px;
     font-size: 1rem;
-    background: none; /* Quitar fondo */
-    border: none; /* Quitar borde */
+    background: none; 
+    border: none; 
     display: inline-block;
-    align-self: center; /* Alinear verticalmente con los demás elementos */
+    align-self: center; 
 }
 
-/* Alinear los elementos de la barra de navegación */
 .nav-menu-large {
     display: flex;
     align-items: center;
     gap: 20px;
 }
 
-/* Estilo del dropdown de perfil */
 .profile-dropdown {
     position: absolute;
     top: 100%;
@@ -143,14 +136,13 @@ body {
 
 .profile-dropdown a {
     color: white;
-    text-decoration: none; /* Elimina el subrayado */
+    text-decoration: none; 
 }
 
 .profile-dropdown a:hover {
     color: #ddd;
 }
 
-/* Estilos para los enlaces de cerrar sesión */
 .profile-dropdown button,
 .nav-menu-mobile button,
 .nav-menu-large button,
@@ -159,22 +151,20 @@ body {
     background: none;
     border: none;
     color: white;
-    font-weight: bold; /* Aplica negrita */
-    text-decoration: none; /* Elimina el subrayado */
+    font-weight: bold; 
+    text-decoration: none; 
     cursor: pointer;
     font-size: 1rem;
 }
 
-/* Estilo al pasar el ratón: color naranja */
 .profile-dropdown button:hover,
 .nav-menu-mobile button:hover,
 .nav-menu-large button:hover,
 .nav-menu-mobile a:hover,
 .nav-menu-large a:hover {
-    color: orange; /* Cambia el color a naranja cuando se pasa el ratón */
+    color: orange; 
 }
 
-/* Estilos responsivos */
 @media (max-width: 768px) {
     .nav-menu-large {
         display: none;
